@@ -19,16 +19,16 @@ static LRESULT CALLBACK keyboardHookProc(
   if (nCode == HC_ACTION) {
     KBDLLHOOKSTRUCT *info = (KBDLLHOOKSTRUCT *) lParam;
 
-    if (info->vkCode == VK_NUMLOCK) {
+    if (info->vkCode == VK_HOME) {
       if (wParam == WM_KEYDOWN && !pressed) {
         pressed = 1;
         pressCount++;
+        InvalidateRect(hWindow, NULL, TRUE);
       }
       if (wParam == WM_KEYUP) {
         pressed = 0;
+        InvalidateRect(hWindow, NULL, TRUE);
       }
-
-      InvalidateRect(hWindow, NULL, TRUE);
     }
   }
 
@@ -82,7 +82,7 @@ static LRESULT CALLBACK windowProc(
 {
   switch (uMsg) {
     case WM_KEYDOWN:
-      if (wParam == VK_BACK) {
+      if (wParam == VK_NUMPAD3) {
         pressCount = 0;
         InvalidateRect(hWindow, NULL, TRUE);
       }
